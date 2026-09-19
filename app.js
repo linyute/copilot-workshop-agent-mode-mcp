@@ -2,6 +2,8 @@
 
 const STORAGE_KEY = 'todo-list-items';
 const THEME_STORAGE_KEY = 'todo-list-theme';
+const FILTER_STORAGE_KEY = 'todo-list-filter';
+const FILTER_OPTIONS = ['all', 'active', 'completed'];
 
 const form = document.getElementById('todo-form');
 const input = document.getElementById('todo-input');
@@ -15,7 +17,7 @@ const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 
 /** 目前的待辦資料,每筆為 { id, text, done } */
 let todos = loadTodos();
-let currentFilter = 'all';
+let currentFilter = loadFilter();
 
 /** 依照儲存偏好或作業系統設定套用主題 */
 function applyTheme() {
@@ -47,6 +49,21 @@ function loadTodos() {
 /** 將目前資料寫回 localStorage */
 function saveTodos() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+}
+
+/** 從 localStorage 讀取篩選偏好,格式不符時回傳全部 */
+function loadFilter() {
+  const savedFilter = localStorage.getItem(FILTER_STORAGE_KEY);
+  return FILTER_OPTIONS.includes(savedFilter) ? savedFilter : 'all';
+}
+
+/** 更新篩選按鈕的選取狀態 */
+function updateFilterButtons() {
+  filterButtons.forEach((filterButton) => {
+    const isActive = filterButton.dataset.filter === currentFilter;
+    filterButton.classList.toggle('active', isActive);
+    filterButton.setAttribute('aria-pressed', String(isActive));
+  });
 }
 
 /** 依照目前資料重新繪製畫面 */
@@ -165,12 +182,9 @@ themeToggleEl.addEventListener('click', () => {
 
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
-    currentFilter = button.dataset.filter;
-    filterButtons.forEach((filterButton) => {
-      const isActive = filterButton === button;
-      filterButton.classList.toggle('active', isActive);
-      filterButton.setAttribute('aria-pressed', String(isActive));
-    });
+    currentFilter = FILTER_OPTIONS.includes(button.dataset.filter) ? button.dataset.filter : 'all';
+    localStorage.setItem(FILTER_STORAGE_KEY, currentFilter);
+    updateFilterButtons();
     render();
   });
 });
@@ -182,4 +196,5 @@ systemTheme.addEventListener('change', () => {
 
 // 首次載入時繪製畫面
 applyTheme();
+updateFilterButtons();
 render();
