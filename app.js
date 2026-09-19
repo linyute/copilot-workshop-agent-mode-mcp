@@ -88,7 +88,7 @@ function render() {
   const emptyMessages = {
     all: '還沒有任何待辦事項,新增一個吧!',
     active: '目前沒有未完成的待辦事項',
-    completed: '目前沒有已完成的待辦事項'
+    completed: '目前沒有已完成的待辦事項,項目只是被篩選掉,並未刪除'
   };
   emptyHintEl.textContent = emptyMessages[currentFilter];
   emptyHintEl.hidden = visibleTodos.length > 0;
