@@ -7,10 +7,26 @@
   --color-primary: #4f6ef7;
   --color-primary-hover: #3f5ae0;
   --color-danger: #e2574c;
+  --color-on-primary: #ffffff;
+  --color-on-danger: #ffffff;
   --color-border: #e4e7eb;
   --radius-lg: 16px;
   --radius-sm: 10px;
   --shadow-card: 0 8px 24px rgba(31, 41, 51, 0.08);
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #18212b;
+  --color-card: #253241;
+  --color-text: #eef3f7;
+  --color-text-muted: #aeb9c5;
+  --color-primary: #7f9aff;
+  --color-primary-hover: #9aadff;
+  --color-danger: #ff8278;
+  --color-on-primary: #18212b;
+  --color-on-danger: #18212b;
+  --color-border: #405064;
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -40,10 +56,32 @@ body {
   padding: 28px;
 }
 
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
 .title {
-  margin: 0 0 20px;
+  margin: 0;
   font-size: 1.5rem;
-  text-align: center;
+}
+
+.theme-toggle {
+  padding: 7px 10px;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  background-color: var(--color-bg);
 }
 
 /* 輸入區:輸入框與新增按鈕並排 */
@@ -71,7 +109,7 @@ body {
 .btn-add {
   padding: 10px 18px;
   font-size: 1rem;
-  color: #fff;
+  color: var(--color-on-primary);
   background-color: var(--color-primary);
   border: none;
   border-radius: var(--radius-sm);
@@ -80,6 +118,29 @@ body {
 
 .btn-add:hover {
   background-color: var(--color-primary-hover);
+}
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 8px 10px;
+  color: var(--color-text-muted);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
 
 .todo-list {
@@ -128,7 +189,7 @@ body {
 }
 
 .btn-delete:hover {
-  color: #fff;
+  color: var(--color-on-danger);
   background-color: var(--color-danger);
   border-color: var(--color-danger);
 }

@@ -8,7 +8,10 @@
 </head>
 <body>
   <main class="card">
-    <h1 class="title">待辦清單</h1>
+    <header class="title-row">
+      <h1 class="title">待辦清單</h1>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切換深色模式"></button>
+    </header>
 
     <!-- 新增待辦的表單:使用 form 可支援按 Enter 送出 -->
     <form id="todo-form" class="input-row" autocomplete="off">
@@ -22,11 +25,18 @@
       <button type="submit" class="btn-add">新增</button>
     </form>
 
+    <!-- 篩選目前要顯示的待辦項目 -->
+    <div class="filter-row" role="group" aria-label="待辦篩選">
+      <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">全部</button>
+      <button class="filter-btn" type="button" data-filter="active" aria-pressed="false">未完成</button>
+      <button class="filter-btn" type="button" data-filter="completed" aria-pressed="false">已完成</button>
+    </div>
+
     <!-- 待辦清單容器 -->
     <ul id="todo-list" class="todo-list"></ul>
 
     <!-- 清單為空時顯示的提示 -->
-    <p id="empty-hint" class="empty-hint" hidden>還沒有任何待辦事項,新增一個吧!</p>
+    <p id="empty-hint" class="empty-hint" hidden></p>
 
     <footer class="footer">
       <span id="remaining">未完成:0 項</span>
